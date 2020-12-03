@@ -11,4 +11,6 @@ let info = path.extname(str)
 // 获取当前执行的文件名
 // console.log(__filename)
 // 获取电脑的cpu信息
-console.log(os.cpus())
+// console.log(os.cpus())
+// 查看内存大小
+console.log(os.totalmem())
