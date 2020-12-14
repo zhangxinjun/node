@@ -1,36 +1,50 @@
 const puppeteer = require("puppeteer")
 
-async function test() {
+async function getNum() {
   // {headless:false}表示有浏览器界面打开
   // defaultViewport设置浏览器窗口大小
   const browser = await puppeteer.launch({
-    headless: false, defaultViewport: {
+    headless: false,
+    defaultViewport: {
       width: 1800, height: 1000
     }
   });
   const page = await browser.newPage();
-  // await page.goto("https://www.jianshu.com/p/eee456d7543f?utm_campaign=maleskine&utm_content=note&utm_medium=seo_notes&utm_source=recommendation")
-
-  await page.goto("https://www.jianshu.com/p/eee456d7543f?utm_campaign=maleskine&utm_content=note&utm_medium=seo_notes&utm_source=recommendation")
-  inputEle = await page.$("._1OhGeD")
-  console.log(inputEle)
-
-  // 屏幕截图
-  // await page.screenshot({path:"screenshot.png"})
-  // $$eval使得我们的回调函数内部的大麦可以在浏览器中运行
-  // page.$$eval("#menu", (element) => {
-  //   // console.log(element)
-  //   element.forEach(item => {
-  //     console.log(item.innerHTML)
-  //   })
-  // })
-
-  // 监听上方的console事件
-  // page.on("console", function (event) {
-  //   console.log(event.text())
-  // })
+  await page.goto("https://sobooks.cc/")
+  let pageNum = await page.$eval(".pagination li:last-child span", element => {
+    let text = element.innerHTML
+    text = text.substring(1, text.length - 1).trim()
+    return text
+  })
+  console.log("总页数"+pageNum)
+  return pageNum
+ 
 }
+ let pageNum =  getNum()
+ console.log("====="+pageNum)
+async function pageList(num) {
+  let pageListUrl = "https://sobooks.cc/page/" + num
+  const browser = await puppeteer.launch({
+    headless: false,
+    defaultViewport: {
+      width: 1800, height: 1000
+    }
+  });
+  const page = await browser.newPage();
+  await page.goto(pageListUrl)
+  let arrPage = await page.$$eval(".card .card-item .thumb-img>a", elements => {
+    let arr = []
+    elements.forEach((element, index) => {
+      var obj = {
+        href: element.getAttribute("href"),
+        title: element.getAttribute("title")
+      }
+      arr.push(obj)
+    })
 
-
-
-test()
+    return arr
+  })
+  console.log("当前页"+arrPage)
+}
+let page = pageList(1)
+console.log("page"+page)
