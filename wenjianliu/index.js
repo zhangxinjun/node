@@ -1,41 +1,27 @@
-let fs = require("fs")
-// 实例化文件流写入对象
-let ws = fs.createWriteStream("hello.text", { flags: "w", encoding: "utf-8" })
-console.log(ws)
-// 文件流式写入
-ws.write("hellowrold1", function (err) {
-  if (err) {
-    console.log("文件写入失败")
-  } else {
-    console.log("文件1写入成功")
-  }
+const fs = require("fs")
+const request = require("request")
+const https = require("https")
 
-})
-ws.write("hellowrold2", function (err) {
-  if (err) {
-    console.log("文件写入失败")
-  } else {
-    console.log("文件2写入成功")
-  }
+// function a () {
+//   request("https://www.valentino.com/variants/images/7789028784813600/R/w400.jpg").pipe(fs.createWriteStream("a.jpg").on("close",err => {
+//     console.log(err)
+//   }))
+// }
+// a()
 
-})
-ws.write("hellowrold3", function (err) {
-  if (err) {
-    console.log("文件写入失败")
-  } else {
-    console.log("文件3写入成功")
-  }
-
-})
-// 文件打开
-ws.on("open", function () {
-  console.log("文件打开")
-})
-// 文件关闭
-ws.on("close", function () {
-  console.log("文件关闭")
-})
-// 文件写入完成
-ws.end(function () {
-  console.log("文件写入关闭")
+const options ={
+  "hostname":"www.valentino.com",
+  "path":"/variants/images/7789028784813600/R/w400.jpg",
+  "method":"GET",
+  "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.183 Safari/537.36"
+}
+https.get(options,res =>{
+  console.log(res.headers)
+  res.on("data",d => {
+    console.log(d)
+   
+  })
+  res.on("error",e => {
+    console.log(e)
+  })
 })
