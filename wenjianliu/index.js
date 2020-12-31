@@ -2,12 +2,12 @@ const fs = require("fs")
 const request = require("request")
 const https = require("https")
 const axios = require("axios")
-// function a () {
-//   request("https://www.valentino.com/variants/images/7789028784813600/R/w400.jpg").pipe(fs.createWriteStream("a.jpg").on("close",err => {
-//     console.log(err)
-//   }))
-// }
-// a()
+function a () {
+  request("https://www.armani.com/11/11990734TT_16_e.jpg").pipe(fs.createWriteStream("a.jpg").on("close",err => {
+    console.log(err)
+  }))
+}
+a()
 
 // const options ={
 //   "hostname":"www.valentino.com",
@@ -38,3 +38,4 @@ axios.get("https://www.valentino.com/variants/images/2204324140530012/F/w400.jpg
     console.log('保存成功');
  });
 })
+
