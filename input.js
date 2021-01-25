@@ -15,3 +15,4 @@ r1.question("今晚吃啥",function(answer){
 r1.on("close",function(){
   process.exit(0)
 })
+console.log("测试")
