@@ -15,4 +15,4 @@ ws.onmessage = (event) => {
 ws.onclose = () => {
   console.log("close connection")
 }
-console.log("啊大大")
+console.log()
